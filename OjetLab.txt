@@ -63,8 +63,6 @@ To resolve:
 Add ojs/ojchart to the list of module requirements
 
 
-<oj-chart type = "pie" series ="[[datasource]]">
-</oj-chart>
 
 ----------------------------------
 
