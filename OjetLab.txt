@@ -1,0 +1,172 @@
+Objective:
+
+Creating and running the OJET project
+Analysing the folder structure
+
+Create OJET project with navdrawer template
+
+=> ojet create firstwebapp --template=navdrawer
+
+Objective:
+To understand data binding using knockout observables in OJET environment
+
+Reference:
+https://knockoutjs.com/documentation/textinput-binding.html
+https://knockoutjs.com/documentation/value-binding.html
+
+HTML: dashboard.html
+
+<div>
+      <h6>Name : <input data-bind="textInput:name"> </h6>
+      <h6>Age  : <input data-bind="textInput:age"> </h6>
+      <hr>
+      <h3>Your name is <span data-bind="text:name"> </span> and age is <span data-bind="text:age"> </span><h3>
+</div>
+
+JS: dashboard.js
+
+    // Observables for name and age
+    self.name = ko.observable("Kane");
+    self.age  = ko.observable("26");
+
+Does it work as expected?
+What's the solution?
+
+---------------------------------------
+
+Objective:
+To understand data binding using knockout observableArray in OJET environment
+To understand the basics of using OJET components
+
+HTML: dashboard.html
+
+  <h3>Please follow the statistics</h3>
+  <div data-bind="ojComponent:{ component: 'ojChart', type: 'bar', series: datasource }">
+  </div>
+
+JS: dashboard.js
+
+      //Observable array for data
+      var data = [
+                    {name:"Pedestrians", items:[42]},
+                    {name:"Vehicles", items:[82]},
+                    {name:"Bicycles", items:[20]},
+                    {name:"Busses", items:[76]},
+                    {name:"Trains", items:[31]}
+                  
+                  ];
+
+      self.datasource = ko.observableArray(data);
+
+Observe the browser, is the chart being displayed?
+To resolve:
+Add ojs/ojchart to the list of module requirements
+
+
+<oj-chart type = "pie" series ="[[datasource]]">
+</oj-chart>
+
+----------------------------------
+
+
+Objective:
+To understand the technique for loading data from an external file
+
+HTML: dashboard.html
+
+Add the following to the existing code:
+
+  <h3>Your time should be distributed the following way</h3>
+  <div data-bind="ojComponent:{ component: 'ojChart', type: 'pie', series: datasource2 }">
+  </div>
+
+Create a json file called data/data.json in js folder with following data:
+
+[
+    {"name":"Work", "items":[8]},
+    {"name":"Play", "items":[3]},
+    {"name":"Eat", "items":[2]},
+    {"name":"Homework", "items":[3]},
+    {"name":"Exercise", "items":[1]},
+    {"name":"Sleep", "items":[6]},
+    {"name":"Netflix", "items":[1]}
+                  
+]
+
+Then prettify the file for a neat JSON format
+PS: JSON file needs the keys to be in quotes
+
+JS: dashboard.js
+
+Add the code:
+    var data2 = JSON.parse(file);
+    self.datasource2 = ko.observableArray(data2);
+
+Add the text reference for file
+    text!data/data.json  -> in module requirements, text protocol/plugin from Require JS 
+    file                 -> in the function parameters
+Note that the order should be maintained
+
+-------------------------------------------------
+
+Objective:
+Understanding and exploring the appController.js, main.js and router configuration
+Creating new modules
+
+Create employees.html in js/views
+
+<div class="oj-hybrid-padding">
+  <h1>Employees</h1>
+</div>
+
+
+Create employees.js in js/viewModels
+PS: It's basically a Require JS module
+
+define(['accUtils', 'knockout', 'jquery'],
+ function(accUtils, ko, $) {
+    function EmployeesViewModel() {
+        
+    }
+    return EmployeesViewModel;
+  }
+);
+
+Hook-up the view-viewModel to the application in appController.js
+
+Add the following to navData:
+{ path: 'employees', detail: { label: 'Employees', iconClass: 'oj-ux-ico-information-s' } },
+
+
+Test with a simple ko observable
+
+employees.html
+
+<div class="oj-hybrid-padding">
+  <h1>Employees</h1>
+  <div>
+      <h6>Name : <input data-bind="textInput:name"> </h6>
+      <hr>
+      <h3>Your name is <span data-bind="text:name"> </span><h3>
+  </div>
+</div>
+
+
+employees.js
+
+define(['accUtils', 'knockout', 'jquery'],
+ function(accUtils, ko, $) {
+    function EmployeesViewModel() {
+        var self = this;
+        self.name = ko.observable("Raj");
+    }
+    return EmployeesViewModel;
+  }
+);
+
+A module called "employees" is created
+
+
+---------------------------------------------------------
+
+
