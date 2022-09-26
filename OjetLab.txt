@@ -75,8 +75,9 @@ HTML: dashboard.html
 Add the following to the existing code:
 
   <h3>Your time should be distributed the following way</h3>
-  <div data-bind="ojComponent:{ component: 'ojChart', type: 'pie', series: datasource2 }">
-  </div>
+
+   <oj-chart type = "pie" series ="[[datasource2]]">
+   </oj-chart>
 
 Create a json file called data/data.json in js folder with following data:
 
@@ -104,6 +105,8 @@ Add the text reference for file
     text!data/data.json  -> in module requirements, text protocol/plugin from Require JS 
     file                 -> in the function parameters
 Note that the order should be maintained
+
+Please create a bar and pie component side by side horizontally!!
 
 -------------------------------------------------
 
